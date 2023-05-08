@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="phaser.min.js"></script> 
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser-arcade-physics.min.js"></script>  -->
+
+</head>
+<body>
+
+    <script>
+    class Scene_One extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_One' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('sky', 'image1.jpg');
+			        this.load.image('logo', 'image2.jpg');
+			        this.load.image('red', 'image3.jpg');
+
+			        this.load.image('logo1', 'Capture.jpg');
+			        this.load.image('red1', 'Capture.jpg');
+
+			    }
+
+				create ()
+				{
+					
+					this.cameras.main.setBackgroundColor('#333');
+
+				    const particles = this.add.particles(0, 0, 'red1', {
+				        speed: 100,
+				        scale: { start: 1, end: 0 },
+				        blendMode: 'ADD'
+				    });
+
+				    const logo = this.physics.add.image(100, 40, 'logo1');
+
+				    logo.setVelocity(100, 200);
+				    logo.setBounce(1, 1);
+				    logo.setCollideWorldBounds(true);
+
+				    particles.startFollow(logo);
+					this.input.once('pointerdown', function (event)
+			        {
+
+			            console.log('From Scene_One to Scene_Two');
+
+			            this.scene.start('Scene_Two');
+
+			        }, this);
+
+			        setTimeout(() => {
+					    this.scene.start('Scene_Two');
+					  }, 5000);
+				}
+			}
+
+	class Scene_Two extends Phaser.Scene
+		{
+
+
+		    constructor ()
+		    {
+		        super({ key: 'Scene_Two' });
+		    }
+
+	    preload ()
+	    {
+	        //this.load.setBaseURL('http://127.0.0.1:8080/');
+	        this.load.audio('overture','Heart-Of-The-Ocean.mp3');
+	    }
+
+		create ()
+		{	
+			this.add.text(400, 250, 'In a Land Far, Far Away', { 
+			  fontFamily: 'Brush Script MT', 
+			  fontSize: '70px', 
+			  color: '#ffffff', 
+			  stroke: '#000000', 
+			  strokeThickness: 6 
+			});
+
+			this.sound.play('overture');
+
+			this.input.once('pointerdown', function (event)
+	        {
+
+	            console.log('From Scene_Two to Scene_ThreeA');
+	            this.scene.start('Scene_ThreeA');
+
+	        }, this);
+
+	        setTimeout(() => {
+					    this.scene.start('Scene_ThreeA');
+					  }, 5000);
+		}
+	}
+	class Scene_ThreeA extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeA' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('screen3Img', 'image1.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3Img');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+					const text = this.add.text(this.game.config.width/2, this.game.config.height - 300, 'There were two countries Li and Z.\nThey had been at war for many years', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '70px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+					text.setOrigin(0.5, 0);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			            console.log('From Scene_ThreeA to Scene_ThreeB');
+
+			            this.scene.start('Scene_ThreeB');
+
+			        }, this);
+
+			        setTimeout(() => {
+					    this.scene.start('Scene_ThreeB');
+					  }, 5000);
+				}
+			}
+
+	class Scene_ThreeB extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeB' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('screen3BImg', 'image3.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3BImg');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+					const text = this.add.text(this.game.config.width/2, this.game.config.height - 300, 'The king of country Z is a cruel and ruthless\nperson who only seeks victory through war.', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '70px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+					text.setOrigin(0.5, 0);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			            this.scene.start('Scene_ThreeC');
+
+			        }, this);
+
+			        setTimeout(() => {
+					    this.scene.start('Scene_ThreeC');
+					  }, 5000);
+				}
+			}
+
+	class Scene_ThreeC extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeC' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('screen3CImg', 'image7.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3CImg');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+					const text = this.add.text(this.game.config.width/2, this.game.config.height - 300, 'You will play a great general, save\nyour country and defeat the enemy!', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '70px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+					text.setOrigin(0.5, 0);
+
+					
+
+			        this.cameras.main.fadeIn(5000);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			        	this.cameras.main.stopFollow();
+			            this.scene.start('Scene_ThreeD');
+
+			        }, this);
+
+			        setTimeout(() => {
+			        	this.cameras.main.stopFollow();
+					    this.scene.start('Scene_ThreeD');
+					  }, 5000);
+				}
+			}
+
+	
+	class Scene_ThreeD extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeD' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('screen3DImg', 'image9.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3DImg');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+
+			        this.cameras.main.fadeIn(5000);
+
+			        this.tweens.add({
+			            targets: backgroundImage,
+			            x: 100,
+			            ease: 'Sine.easeInOut',
+			            yoyo: true,
+			            repeat: -1,
+			            duration: 3000
+			        });
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			        	this.cameras.main.stopFollow();
+			            this.scene.start('Scene_ThreeE');
+
+			        }, this);
+
+
+			        setTimeout(() => {
+			        	this.cameras.main.stopFollow();
+					    this.scene.start('Scene_ThreeE');
+					  }, 5000);
+				}
+			}
+
+	
+
+	class Scene_ThreeE extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeE' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+
+			        this.load.image('screen3CImg', 'image7.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3CImg');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+					const text1 = this.add.text(this.game.config.width/2, 5, 'Revenge', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '100px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+
+					const text2 = this.add.text(this.game.config.width/4, this.game.config.height - 400, 'Play\nSettings\nQuit', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '70px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+					text1.setOrigin(0.5, 0);
+					text2.setOrigin(0.5, 0);
+
+					
+
+			        this.cameras.main.fadeIn(6000);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			        	this.cameras.main.stopFollow();
+			            this.scene.start('Scene_ThreeF');
+
+			        }, this);
+
+
+			        setTimeout(() => {
+			        	this.cameras.main.stopFollow();
+					    this.scene.start('Scene_ThreeF');
+					  }, 5000);
+				}
+			}
+
+	
+	class Scene_ThreeF extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_ThreeF' });
+			    }
+
+			    preload ()
+			    {
+			        //this.load.setBaseURL('http://127.0.0.1:8080/');
+			        this.load.image('screen3FImg', 'imageWin.jpg');
+			    }
+
+				create ()
+				{
+				    const backgroundImage = this.add.image(0, 0, 'screen3FImg');
+					backgroundImage.setOrigin(0, 0);
+					backgroundImage.setDisplaySize(this.game.config.width, this.game.config.height);
+					const text1 = this.add.text(this.game.config.width/2, this.game.config.height - 200, 'Win', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '100px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true,
+					    wordWrapWidth: backgroundImage.width * 0.8 // Use 80% of the image width for the text width
+					});
+
+					text1.setOrigin(0.5, 0);
+
+					
+
+			        this.cameras.main.fadeIn(5000);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			        	this.cameras.main.stopFollow();
+			            this.scene.start('Scene_Four');
+
+			        }, this);
+
+
+			        setTimeout(() => {
+			        	this.cameras.main.stopFollow();
+					    this.scene.start('Scene_Four');
+					  }, 5000);
+				}
+			}
+
+	class Scene_Four extends Phaser.Scene
+			{
+
+			    constructor ()
+			    {
+			        super({ key: 'Scene_Four' });
+			    }
+
+				create ()
+				{
+			        const r1 = this.add.circle(200, 200, 80, 0x6666ff);
+
+			        const r2 = this.add.circle(400, 200, 80, 0x9966ff);
+
+			        r2.setStrokeStyle(4, 0xefc53f);
+
+			        const r3 = this.add.circle(600, 200, 80);
+
+			        r3.setStrokeStyle(2, 0x1a65ac);
+
+			        const r4 = this.add.circle(200, 400, 80, 0xff6699);
+
+			        const r5 = this.add.circle(400, 400, 80, 0xff33cc);
+
+			        const r6 = this.add.circle(600, 400, 80, 0xff66ff);
+			        //  WebGL only
+			        r6.setIterations(0.2);
+
+			        this.tweens.add({
+
+			            targets: r4,
+			            scaleX: 0.25,
+			            scaleY: 0.5,
+			            yoyo: true,
+			            repeat: -1,
+			            ease: 'Sine.easeInOut'
+
+			        });
+
+			        this.tweens.add({
+
+			            targets: r5,
+			            x: 700,
+			            duration: 2000,
+			            repeat: -1,
+			            hold: 500,
+			            repeatDelay: 500,
+			            ease: 'cubic.inout'
+
+			        });
+
+			        this.tweens.add({
+
+			            targets: r6,
+			            angle: 90,
+			            yoyo: true,
+			            repeat: -1,
+			            ease: 'Sine.easeInOut'
+
+			        });
+
+
+			        const text = this.add.text(this.game.config.width - 300, 10, 'Credits\n\nAudio Assets:\n https://www.chosic.com/download-audio/29976/"', { 
+					    fontFamily: 'Brush Script MT', 
+					    fontSize: '30px', 
+					    color: '#FFC0CB', 
+					    stroke: '#000000', 
+					    strokeThickness: 6,
+					    align: 'center',
+					    wordWrap: true
+					});
+
+					text.setOrigin(0.5, 0);
+
+				    this.input.once('pointerdown', function (event)
+			        {
+
+			            this.scene.start('Scene_One');
+
+			        }, this);
+				}
+			}
+
+	const config = {
+	    type: Phaser.AUTO,
+	    width: window.innerWidth,
+    	height: window.innerHeight,
+	    physics: {
+	        default: 'arcade',
+	        arcade: {
+	            gravity: { y: 200 }
+	        }
+	    },
+	    audio: {
+        disableWebAudio: true
+    	},
+	    scene: [ Scene_One, Scene_Two, Scene_ThreeA, Scene_ThreeB, Scene_ThreeC, Scene_ThreeD, Scene_ThreeE, Scene_ThreeF, Scene_Four]
+	};
+
+	const game = new Phaser.Game(config);
+    </script>
+
+</body>
+</html>
